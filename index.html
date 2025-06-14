@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎒 Fournitures Scolaires 6ᵉ - Suivi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .checked {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .hoverable-label {
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border-radius: 0.25rem;
+      /* ~rounded */
+      padding: 0.25rem 0.5rem;
+      /* ~px-2 py-1 */
+    }
+
+    .hoverable-label:hover {
+      background-color: #f7fafc;
+      /* ~gray-100 */
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <div class="max-w-4xl mx-auto p-6">
+    <!-- En-tête -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+  <div class="flex items-center gap-4">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Corneille_de_Lyon_-_Portrait_pr%C3%A9sum%C3%A9_de_Cl%C3%A9ment_Marot_%28Huile_sur_bois%2C_1536%29.jpg/160px-Corneille_de_Lyon_-_Portrait_pr%C3%A9sum%C3%A9_de_Cl%C3%A9ment_Marot_%28Huile_sur_bois%2C_1536%29.jpg"
+      alt="Portrait de Clément Marot"
+      class="w-16 h-auto rounded shadow-sm" />
+
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-1">🎒 Fournitures Scolaires – 6ᵉ</h1>
+      <p class="text-gray-600">Année 2025–2026 • Suivez vos achats - Collège Clément Marault</p>
+    </div>
+  </div>
+
+  <blockquote class="mt-4 text-sm italic text-gray-500 border-l-4 border-indigo-300 pl-3">
+    « Qui bien commence, la moitié fait. »<br>
+    <a href="https://fr.wikipedia.org/wiki/Cl%C3%A9ment_Marot" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline font-medium">
+          Clément Marot
+        </a>
+  </blockquote>
+
+  <div class="mt-4 flex flex-wrap items-center gap-4">
+    <div class="flex items-center">
+      <span class="text-sm text-gray-600">Progression:</span>
+      <div class="ml-2 bg-gray-200 rounded-full h-2 w-32">
+        <div id="progress-bar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+      <span id="progress-text" class="ml-2 text-sm font-medium text-gray-700">0/0</span>
+    </div>
+    <button id="reset-btn"
+      class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors">
+      Réinitialiser
+    </button>
+  </div>
+</div>
+
+    <div class="grid gap-6">
+      <!-- Cahiers et Classeurs -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">📘 CAHIERS ET CLASSEURS</h2>
+        </div>
+        <div class="p-4 space-y-3">
+          <!-- Cahiers langues vivantes -->
+          <div class="border-l-4 border-blue-400 pl-4">
+            <h3 class="font-semibold text-gray-800 mb-2">2 cahiers 24 x 32 – 96 pages – grands carreaux :</h3>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-allemand">
+                <span class="item-text">Allemand (1)</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text">+ Protège-cahier</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-anglais">
+                <span class="item-text">Anglais (1)</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text">+ Protège-cahier</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Cahiers matières scientifiques -->
+          <div class="border-l-4 border-green-400 pl-4">
+            <h3 class="font-semibold text-gray-800 mb-2">7 cahiers 24 x 32 – 48 pages – grands carreaux :</h3>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded"
+                  data-item="cahiers-histoire-geo">
+                <span class="item-text">Histoire-Géographie-EMC (3)</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text">+ Protège-cahier</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahiers-svt">
+                <span class="item-text">SVT (3)</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text">+ Protège-cahier</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-math">
+                <span class="item-text">Mathématiques (1) (sans spirale)</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text">+ Protège-cahier</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Autres cahiers -->
+          <div class="space-y-2">
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-physique">
+              <span class="item-text">1 cahier 24 x 32 – 48 pages – petits carreaux (Physique-Chimie)</span>
+            </label>
+            <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text">+ Protège-cahier</span>
+              </label>
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="classeur-francais">
+              <span class="item-text">1 classeur souple grand format <em>ou</em> 1 cahier 24 x 32 (Français) <br>
+                <small class="text-gray-500">à confirmer selon le professeur à la rentrée</small></span>
+            </label>
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="classeur-techno">
+              <span class="item-text">1 classeur souple format 21 x 29,7 – peu épais (Technologie)</span>
+            </label>
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-arts">
+              <span class="item-text">1 cahier de dessin 24 x 32 <em>ou</em> 1 cahier de TP (Arts plastiques)</span>
+            </label>
+
+            <!-- Ajouts Langues anciennes et options -->
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-latin">
+              <span class="item-text text-purple-500">1 cahier 24 x 32 – grands carreaux (Latin)</span>
+            </label>
+            <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text text-purple-500">+ Protège-cahier</span>
+              </label>
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-grec">
+              <span class="item-text text-purple-500">1 cahier 24 x 32 – 48 pages – gros carreaux
+                (Grec)</span>
+            </label>
+            <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-allemand">
+                <span class="item-text text-purple-500">+ Protège-cahier</span>
+              </label>
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-fca">
+              <span class="item-text text-purple-500">1 cahier 24 x 32 – gros carreaux (Option FCA)</span>
+            </label>
+            <label class="flex items-center space-x-3 hoverable-label">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-brouillon">
+              <span class="item-text">1 cahier de brouillon</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feuilles, Intercalaires, Pochettes -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">📂 FEUILLES, INTERCALAIRES, POCHETTES</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded"
+              data-item="pochette-calque-millimetre">
+            <span class="item-text">Pochette avec papier calque et papier millimétré (Mathématiques)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded"
+              data-item="feuilles-simples-doubles">
+            <span class="item-text">Paquet de feuilles doubles 21 x 29,7 (Mathématiques)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded"
+              data-item="feuilles-simples-doubles">
+            <span class="item-text">Paquet de feuilles simples – grands carreaux – grand format – perforées
+              (Toutes disciplines)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded"
+              data-item="feuilles-simples-doubles">
+            <span class="item-text">Paquet de feuilles doubles – grands carreaux – grand format – perforées
+              (Toutes disciplines)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="feuilles-physique">
+            <span class="item-text">Feuilles doubles 24 x 32 – grands carreaux (Physique-Chimie)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="feuilles-techno">
+            <span class="item-text">10 Feuilles simples – petits carreaux (réserve) (Technologie)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="intercalaires">
+            <span class="item-text">6 intercalaires (Technologie)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="pochettes-plastiques">
+            <span class="item-text">10 pochettes plastiques perforées (Technologie)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Écriture & Dessin -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">✏️ ÉCRITURE & DESSIN</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="crayon-hb">
+            <span class="item-text">1 crayon HB</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="gomme">
+            <span class="item-text">1 gomme</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="taille-crayon">
+            <span class="item-text">1 taille-crayon avec réservoir</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="stylos-bille">
+            <span class="item-text">3 Stylos bille : bleu, vert, rouge</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="stylo-encre">
+            <span class="item-text">1 stylo encre</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="effaceur">
+            <span class="item-text">1 effaceur ou ruban correcteur (⚠️ correcteur liquide interdit)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="feutres-fluo">
+            <span class="item-text">2 feutres fluorescents (dont 1 jaune obligatoire)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="crayons-couleur">
+            <span class="item-text">Crayons de couleur (au moins 5)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="colle">
+            <span class="item-text">1 stick de colle blanche (⚠️ pas de tube)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="ciseaux">
+            <span class="item-text">1 paire de ciseaux</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Géométrie -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">📐 GÉOMÉTRIE</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="regle">
+            <span class="item-text">1 règle graduée</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="compas">
+            <span class="item-text">1 compas</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="equerre">
+            <span class="item-text">1 équerre</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="rapporteur">
+            <span class="item-text">1 rapporteur</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Numérique -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">🎧 NUMÉRIQUE</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cle-usb">
+            <span class="item-text">1 clé USB</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="ecouteurs">
+            <span class="item-text">1 paire d'écouteurs</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Divers -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">📓 DIVERS</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="agenda">
+            <span class="item-text">1 agenda de poche ou cahier de textes</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="porte-vues-musique">
+            <span class="item-text">1 porte-vues A4 – 24 pochettes (Éducation musicale)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="porte-vues-theatre">
+            <span class="item-text text-purple-500">1 porte-vues A4 – 24 pochettes (Option théâtre, si choisie)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Arts Plastiques -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">🎨 ARTS PLASTIQUES</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="pochette-dessin">
+            <span class="item-text">1 pochette de feuilles de dessin 24 x 32 – 180 g ou 224 g</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="crayon-2b">
+            <span class="item-text">1 crayon à papier 2B</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="feutres-18">
+            <span class="item-text">1 pochette de 18 feutres</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="aquacouleur">
+            <span class="item-text">1 pochette de crayons de couleur Aquacouleur</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="gouache">
+            <span class="item-text">5 tubes de gouache : rouge magenta, bleu cyan, jaune citron, noir, blanc</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="pinceaux">
+            <span class="item-text">2 pinceaux : 1 fin + 1 épais</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Sciences -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">🧪 SCIENCES</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="blouse-sciences">
+            <span class="item-text">1 blouse à manches longues en coton (SVT & Physique-Chimie)</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="calculatrice">
+            <span class="item-text">1 calculatrice scientifique collège pour tous les niveaux (CASIO ou TEXAS recommandée)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- EPS / Sport -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">🏃 EPS / SPORT</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="baskets-tenue">
+            <span class="item-text">Baskets + tenue de sport adaptée</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="gourde">
+            <span class="item-text">Gourde ou bouteille d'eau</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="attache-cheveux">
+            <span class="item-text">Attache-cheveux pour cheveux longs/frange</span>
+          </label>
+          <label class="flex items-center space-x-3 hoverable-label">
+            <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cordon-lunettes">
+            <span class="item-text">Cordon élastique pour lunettes</span>
+          </label>
+
+          <div class="border-l-4 border-cyan-400 pl-4 mt-4">
+            <h3 class="font-semibold text-gray-800 mb-2">Pour la natation (si au programme) :</h3>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="maillot-bain">
+                <span class="item-text">Maillot ou caleçon de bain (⚠️ pas de short ni de sous-vêtement)</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="serviette">
+                <span class="item-text">Serviette</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="bonnet">
+                <span class="item-text">Bonnet</span>
+              </label>
+              <label class="flex items-center space-x-3 hoverable-label">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded"
+                  data-item="lunettes-natation">
+                <span class="item-text">Lunettes</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fournitures Spécifiques -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="section-header text-white p-4">
+          <h2 class="text-xl font-bold">📚 FOURNITURES SPÉCIFIQUES</h2>
+        </div>
+        <div class="p-4 space-y-4">
+          <div class="border-l-4 border-yellow-400 pl-4">
+            <h3 class="font-semibold text-gray-800 mb-2">Allemand 6e</h3>
+            <label class="flex items-center space-x-3 cursor-pointer">
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded"
+                data-item="cahier-allemand-bordas">
+              <span class="item-text">1 cahier d'activités <em>Hab Spass NEU – 1ère année</em> – Bordas<br>
+                <small class="text-gray-600">ISBN : 978-204-733-9930</small></span>
+            </label>
+          </div>
+
+          <div class="border-l-4 border-purple-400 pl-4">
+            <h3 class="font-semibold text-gray-800 mb-2">Français 6e</h3>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="livres-poche">
+                <span class="item-text">Livres format poche (achat en cours d'année)</span>
+              </label>
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-langue">
+                <span class="item-text">Cahier d'exercices de langue (selon le professeur)</span>
+              </label>
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="dictionnaire">
+                <span class="item-text">Dictionnaire ROBERT ou Le Petit LAROUSSE (recommandé à la maison)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script JS : localStorage + progression -->
+  <script>
+    class SchoolSuppliesTracker {
+      constructor() {
+        this.checkedItems = new Set();
+        this.totalItems = 0;
+        this.init();
+      }
+
+      init() {
+        this.loadState();
+        this.bindEvents();
+        this.updateProgress();
+      }
+
+      bindEvents() {
+        document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+          checkbox.addEventListener('change', (e) => {
+            this.handleCheckboxChange(e);
+          });
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => {
+          this.resetAll();
+        });
+
+        this.totalItems = document.querySelectorAll('.item-checkbox').length;
+      }
+
+      handleCheckboxChange(event) {
+        const checkbox = event.target;
+        const itemId = checkbox.dataset.item;
+        const textElement = checkbox.nextElementSibling;
+
+        if (checkbox.checked) {
+          this.checkedItems.add(itemId);
+          textElement.classList.add('checked');
+        } else {
+          this.checkedItems.delete(itemId);
+          textElement.classList.remove('checked');
+        }
+
+        this.saveState();
+        this.updateProgress();
+      }
+
+      updateProgress() {
+        const checkedCount = this.checkedItems.size;
+        const percentage = this.totalItems > 0 ? (checkedCount / this.totalItems) * 100 : 0;
+
+        document.getElementById('progress-bar').style.width = `${percentage}%`;
+        document.getElementById('progress-text').textContent = `${checkedCount}/${this.totalItems}`;
+      }
+
+      saveState() {
+        localStorage.setItem('schoolSuppliesChecked', JSON.stringify([...this.checkedItems]));
+      }
+
+      loadState() {
+        const saved = localStorage.getItem('schoolSuppliesChecked');
+        if (saved) {
+          this.checkedItems = new Set(JSON.parse(saved));
+        }
+
+        document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+          const itemId = checkbox.dataset.item;
+          const textElement = checkbox.nextElementSibling;
+
+          if (this.checkedItems.has(itemId)) {
+            checkbox.checked = true;
+            textElement.classList.add('checked');
+          } else {
+            checkbox.checked = false;
+            textElement.classList.remove('checked');
+          }
+        });
+      }
+
+      resetAll() {
+        if (confirm('Êtes-vous sûr de vouloir tout réinitialiser ?')) {
+          this.checkedItems.clear();
+          localStorage.removeItem('schoolSuppliesChecked');
+          document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.nextElementSibling.classList.remove('checked');
+          });
+          this.updateProgress();
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new SchoolSuppliesTracker();
+    });
+  </script>
+</body>
+
+</html>
