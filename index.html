@@ -37,37 +37,79 @@
   <div class="max-w-4xl mx-auto p-6">
     <!-- En-tête -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-  <div class="flex items-center gap-4">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Corneille_de_Lyon_-_Portrait_pr%C3%A9sum%C3%A9_de_Cl%C3%A9ment_Marot_%28Huile_sur_bois%2C_1536%29.jpg/160px-Corneille_de_Lyon_-_Portrait_pr%C3%A9sum%C3%A9_de_Cl%C3%A9ment_Marot_%28Huile_sur_bois%2C_1536%29.jpg"
-      alt="Portrait de Clément Marot"
-      class="w-16 h-auto rounded shadow-sm" />
+  <!-- En-tête visuel -->
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Corneille_de_Lyon_-_Portrait_pr%C3%A9sum%C3%A9_de_Cl%C3%A9ment_Marot_%28Huile_sur_bois%2C_1536%29.jpg/160px-Corneille_de_Lyon_-_Portrait_pr%C3%A9sum%C3%A9_de_Cl%C3%A9ment_Marot_%28Huile_sur_bois%2C_1536%29.jpg"
+      alt="Portrait de Clément Marot" class="w-16 h-auto rounded shadow-sm" />
 
     <div>
-      <h1 class="text-3xl font-bold text-gray-800 mb-1">🎒 Fournitures Scolaires – 6ᵉ</h1>
-      <p class="text-gray-600">Année 2025–2026 • Suivez vos achats - Collège Clément Marault</p>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-1">🎒 Fournitures Scolaires – 6ᵉ</h1>
+      <p class="text-gray-600 text-sm sm:text-base">Année 2025–2026 • Suivez vos achats - Collège Clément Marault</p>
     </div>
   </div>
 
+  <!-- Citation -->
   <blockquote class="mt-4 text-sm italic text-gray-500 border-l-4 border-indigo-300 pl-3">
-    « Qui bien commence, la moitié fait. »<br>
-    <a href="https://fr.wikipedia.org/wiki/Cl%C3%A9ment_Marot" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline font-medium">
-          Clément Marot
-        </a>
+    « Qui bien commence, la moitié fait. »<br />
+    <a href="https://fr.wikipedia.org/wiki/Cl%C3%A9ment_Marot" target="_blank" rel="noopener noreferrer"
+      class="text-indigo-600 hover:underline font-medium">Clément Marot</a>
   </blockquote>
 
-  <div class="mt-4 flex flex-wrap items-center gap-4">
-    <div class="flex items-center">
-      <span class="text-sm text-gray-600">Progression:</span>
-      <div class="ml-2 bg-gray-200 rounded-full h-2 w-32">
-        <div id="progress-bar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+  <!-- Progression + Reset -->
+  <div class="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
+    <div class="flex items-center gap-2">
+      <span class="text-sm text-gray-600">Progression :</span>
+      <div class="relative w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div id="progress-bar" class="absolute top-0 left-0 h-2 bg-green-500 rounded-full transition-all duration-300"
+          style="width: 0%">
+        </div>
       </div>
-      <span id="progress-text" class="ml-2 text-sm font-medium text-gray-700">0/0</span>
+      <span id="progress-text" class="text-sm font-medium text-gray-700">0/0</span>
     </div>
     <button id="reset-btn"
-      class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors">
+      class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors w-fit">
       Réinitialiser
     </button>
   </div>
+
+  <!-- Bloc Seed repliable -->
+  <details class="mt-6 bg-gray-100 rounded p-4 text-sm open:bg-white open:shadow-md transition-all duration-200">
+    <summary class="cursor-pointer font-semibold text-gray-800 flex items-center justify-between">
+      <span>📦 Sauvegarder / Charger vos cases cochées</span>
+      <svg class="w-5 h-5 ml-2 text-gray-500 transition-transform duration-200 group-open:rotate-180"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </summary>
+
+    <div class="mt-4 space-y-3">
+      <p class="text-gray-600">
+        Vous pouvez <strong>générer un code</strong> (appelé seed) pour <strong>partager</strong> ou
+        <strong>restaurer</strong> vos coches sur un autre appareil.<br />
+        💡 La seed ne contient pas de données personnelles.
+      </p>
+
+      <input id="seed-field" type="text"
+        class="w-full px-3 py-1 border rounded text-sm font-mono bg-white text-gray-800"
+        placeholder="Votre seed apparaîtra ici">
+
+      <div class="flex flex-wrap gap-2">
+        <button id="generate-seed-btn"
+          class="px-4 py-1 bg-indigo-500 text-white text-sm rounded hover:bg-indigo-600 transition-colors">
+          Générer
+        </button>
+        <button id="load-seed-btn"
+          class="px-4 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition-colors">
+          Charger
+        </button>
+        <button id="copy-seed-btn"
+          class="px-4 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition-colors">
+          Copier
+        </button>
+      </div>
+    </div>
+  </details>
 </div>
 
     <div class="grid gap-6">
@@ -139,9 +181,9 @@
               <span class="item-text">1 cahier 24 x 32 – 48 pages – petits carreaux (Physique-Chimie)</span>
             </label>
             <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
-                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-physique">
-                <span class="item-text">+ Protège-cahier</span>
-              </label>
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-physique">
+              <span class="item-text">+ Protège-cahier</span>
+            </label>
             <label class="flex items-center space-x-3 hoverable-label">
               <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="classeur-francais">
               <span class="item-text">1 classeur souple grand format <em>ou</em> 1 cahier 24 x 32 (Français) <br>
@@ -162,18 +204,18 @@
               <span class="item-text text-purple-500">1 cahier 24 x 32 – grands carreaux (Latin)</span>
             </label>
             <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
-                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-latin">
-                <span class="item-text text-purple-500">+ Protège-cahier</span>
-              </label>
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-latin">
+              <span class="item-text text-purple-500">+ Protège-cahier</span>
+            </label>
             <label class="flex items-center space-x-3 hoverable-label">
               <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-grec">
               <span class="item-text text-purple-500">1 cahier 24 x 32 – 48 pages – gros carreaux
                 (Grec)</span>
             </label>
             <label class="flex items-center space-x-3 hoverable-label ml-6 text-sm text-gray-600">
-                <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-grec">
-                <span class="item-text text-purple-500">+ Protège-cahier</span>
-              </label>
+              <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="protege-grec">
+              <span class="item-text text-purple-500">+ Protège-cahier</span>
+            </label>
             <label class="flex items-center space-x-3 hoverable-label">
               <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="cahier-fca">
               <span class="item-text text-purple-500">1 cahier 24 x 32 – gros carreaux (Option FCA)</span>
@@ -330,7 +372,7 @@
           <h2 class="text-xl font-bold">📓 DIVERS</h2>
         </div>
         <div class="p-4 space-y-2">
-          
+
           <label class="flex items-center space-x-3 hoverable-label">
             <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="agenda">
             <span class="item-text">1 agenda de poche ou cahier de textes</span>
@@ -391,7 +433,8 @@
           </label>
           <label class="flex items-center space-x-3 hoverable-label">
             <input type="checkbox" class="item-checkbox w-5 h-5 text-blue-600 rounded" data-item="calculatrice">
-            <span class="item-text">1 calculatrice scientifique collège pour tous les niveaux (CASIO ou TEXAS recommandée)</span>
+            <span class="item-text">1 calculatrice scientifique collège pour tous les niveaux (CASIO ou TEXAS
+              recommandée)</span>
           </label>
         </div>
       </div>
@@ -483,100 +526,123 @@
   </div>
 
   <!-- Script JS : localStorage + progression -->
-  <script>
-    class SchoolSuppliesTracker {
-      constructor() {
-        this.checkedItems = new Set();
-        this.totalItems = 0;
-        this.init();
-      }
+ <script>
+  class SchoolSuppliesTracker {
+    constructor() {
+      this.checkedItems = new Set();
+      this.init();
+    }
 
-      init() {
-        this.loadState();
-        this.bindEvents();
-        this.updateProgress();
-      }
+    init() {
+      this.updateItemList();
+      this.loadState();
+      this.bindEvents();
+      this.updateProgress();
+    }
 
-      bindEvents() {
-        document.querySelectorAll('.item-checkbox').forEach(checkbox => {
-          checkbox.addEventListener('change', (e) => {
-            this.handleCheckboxChange(e);
-          });
-        });
+    updateItemList() {
+      this.allItems = Array.from(document.querySelectorAll('.item-checkbox')).map(cb => cb.dataset.item);
+      this.totalItems = this.allItems.length;
+    }
 
-        document.getElementById('reset-btn').addEventListener('click', () => {
-          this.resetAll();
-        });
+    bindEvents() {
+      document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', e => this.handleCheckboxChange(e));
+      });
 
-        this.totalItems = document.querySelectorAll('.item-checkbox').length;
-      }
+      document.getElementById('reset-btn').addEventListener('click', () => this.resetAll());
+      document.getElementById('generate-seed-btn').addEventListener('click', () => this.generateSeed());
+      document.getElementById('load-seed-btn').addEventListener('click', () => this.loadFromSeed());
+      document.getElementById('copy-seed-btn').addEventListener('click', () => {
+        const field = document.getElementById('seed-field');
+        if (!field.value) return;
+        navigator.clipboard.writeText(field.value)
+          .then(() => alert("Seed copiée dans le presse-papier !"))
+          .catch(() => alert("Échec de la copie. Essayez manuellement."));
+      });
+    }
 
-      handleCheckboxChange(event) {
-        const checkbox = event.target;
+    handleCheckboxChange(event) {
+      const checkbox = event.target;
+      const itemId = checkbox.dataset.item;
+      const textElement = checkbox.nextElementSibling;
+
+      checkbox.checked ? this.checkedItems.add(itemId) : this.checkedItems.delete(itemId);
+      textElement.classList.toggle('checked', checkbox.checked);
+
+      this.saveState();
+      this.updateProgress();
+    }
+
+    updateProgress() {
+      const checkedCount = this.checkedItems.size;
+      const total = this.totalItems || 0;
+      const percentage = total > 0 ? (checkedCount / total) * 100 : 0;
+
+      document.getElementById('progress-bar').style.width = `${percentage}%`;
+      document.getElementById('progress-text').textContent = `${checkedCount}/${total}`;
+    }
+
+    saveState() {
+      localStorage.setItem('schoolSuppliesChecked', JSON.stringify([...this.checkedItems]));
+    }
+
+    loadState() {
+      const saved = localStorage.getItem('schoolSuppliesChecked');
+      if (saved) this.checkedItems = new Set(JSON.parse(saved));
+
+      document.querySelectorAll('.item-checkbox').forEach(checkbox => {
         const itemId = checkbox.dataset.item;
         const textElement = checkbox.nextElementSibling;
+        const isChecked = this.checkedItems.has(itemId);
 
-        if (checkbox.checked) {
-          this.checkedItems.add(itemId);
-          textElement.classList.add('checked');
-        } else {
-          this.checkedItems.delete(itemId);
-          textElement.classList.remove('checked');
-        }
+        checkbox.checked = isChecked;
+        textElement.classList.toggle('checked', isChecked);
+      });
+    }
 
-        this.saveState();
-        this.updateProgress();
-      }
-
-      updateProgress() {
-        const checkedCount = this.checkedItems.size;
-        const percentage = this.totalItems > 0 ? (checkedCount / this.totalItems) * 100 : 0;
-
-        document.getElementById('progress-bar').style.width = `${percentage}%`;
-        document.getElementById('progress-text').textContent = `${checkedCount}/${this.totalItems}`;
-      }
-
-      saveState() {
-        localStorage.setItem('schoolSuppliesChecked', JSON.stringify([...this.checkedItems]));
-      }
-
-      loadState() {
-        const saved = localStorage.getItem('schoolSuppliesChecked');
-        if (saved) {
-          this.checkedItems = new Set(JSON.parse(saved));
-        }
-
-        document.querySelectorAll('.item-checkbox').forEach(checkbox => {
-          const itemId = checkbox.dataset.item;
-          const textElement = checkbox.nextElementSibling;
-
-          if (this.checkedItems.has(itemId)) {
-            checkbox.checked = true;
-            textElement.classList.add('checked');
-          } else {
-            checkbox.checked = false;
-            textElement.classList.remove('checked');
-          }
+    resetAll() {
+      if (confirm('Êtes-vous sûr de vouloir tout réinitialiser ?')) {
+        this.checkedItems.clear();
+        localStorage.removeItem('schoolSuppliesChecked');
+        document.querySelectorAll('.item-checkbox').forEach(cb => {
+          cb.checked = false;
+          cb.nextElementSibling.classList.remove('checked');
         });
-      }
-
-      resetAll() {
-        if (confirm('Êtes-vous sûr de vouloir tout réinitialiser ?')) {
-          this.checkedItems.clear();
-          localStorage.removeItem('schoolSuppliesChecked');
-          document.querySelectorAll('.item-checkbox').forEach(checkbox => {
-            checkbox.checked = false;
-            checkbox.nextElementSibling.classList.remove('checked');
-          });
-          this.updateProgress();
-        }
+        this.updateProgress();
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      new SchoolSuppliesTracker();
-    });
-  </script>
+    generateSeed() {
+      const seed = btoa(JSON.stringify([...this.checkedItems]));
+      document.getElementById('seed-field').value = seed;
+    }
+
+    loadFromSeed() {
+      const input = document.getElementById('seed-field').value.trim();
+      try {
+        const decoded = JSON.parse(atob(input));
+        this.checkedItems = new Set(decoded);
+
+        document.querySelectorAll('.item-checkbox').forEach(cb => {
+          const id = cb.dataset.item;
+          const isChecked = this.checkedItems.has(id);
+          cb.checked = isChecked;
+          cb.nextElementSibling.classList.toggle('checked', isChecked);
+        });
+
+        this.saveState();
+        this.updateProgress();
+      } catch (e) {
+        alert("Seed invalide.");
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new SchoolSuppliesTracker();
+  });
+</script>
 </body>
 
 </html>
