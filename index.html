@@ -526,127 +526,149 @@
     </div>
   </div>
 
+  <div id="toast"
+    class="fixed bottom-4 right-4 bg-gray-800 text-white text-sm rounded px-4 py-2 shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+  </div>
+
   <!-- Script JS : localStorage + progression -->
   <script>
-    class SchoolSuppliesTracker {
-      constructor() {
-        this.checkedItems = new Set();
-        this.init();
-      }
+  class SchoolSuppliesTracker {
+    constructor() {
+      this.checkedItems = new Set();
+      this.toastTimeout = null;
+      this.init();
+    }
 
-      init() {
-        this.updateItemList();
-        this.loadState();
-        this.bindEvents();
-        this.updateProgress();
-      }
+    init() {
+      this.updateItemList();
+      this.loadState();
+      this.bindEvents();
+      this.updateProgress();
+    }
 
-      updateItemList() {
-        this.allItems = Array.from(document.querySelectorAll('.item-checkbox')).map(cb => cb.dataset.item);
-        this.totalItems = this.allItems.length;
-      }
+    updateItemList() {
+      this.allItems = Array.from(document.querySelectorAll('.item-checkbox')).map(cb => cb.dataset.item);
+      this.totalItems = this.allItems.length;
+    }
 
-      bindEvents() {
-        document.querySelectorAll('.item-checkbox').forEach(checkbox => {
-          checkbox.addEventListener('change', e => this.handleCheckboxChange(e));
-        });
+    bindEvents() {
+      document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', e => this.handleCheckboxChange(e));
+      });
 
-        document.getElementById('reset-btn').addEventListener('click', () => this.resetAll());
-        document.getElementById('generate-seed-btn').addEventListener('click', () => this.generateSeed());
-        document.getElementById('load-seed-btn').addEventListener('click', () => this.loadFromSeed());
-        document.getElementById('copy-seed-btn').addEventListener('click', () => {
-          const field = document.getElementById('seed-field');
-          if (!field.value) return;
-          navigator.clipboard.writeText(field.value)
-            .then(() => alert("Seed copiée dans le presse-papier !"))
-            .catch(() => alert("Échec de la copie. Essayez manuellement."));
-        });
-      }
+      document.getElementById('reset-btn').addEventListener('click', () => this.resetAll());
+      document.getElementById('generate-seed-btn').addEventListener('click', () => this.generateSeed());
+      document.getElementById('load-seed-btn').addEventListener('click', () => this.loadFromSeed());
+      document.getElementById('copy-seed-btn').addEventListener('click', () => {
+        const field = document.getElementById('seed-field');
+        if (!field.value) return;
+        navigator.clipboard.writeText(field.value)
+          .then(() => this.showToast("✅ Seed copiée !"))
+          .catch(() => this.showToast("❌ Échec de la copie"));
+      });
+    }
 
-      handleCheckboxChange(event) {
-        const checkbox = event.target;
+    handleCheckboxChange(event) {
+      const checkbox = event.target;
+      const itemId = checkbox.dataset.item;
+      const textElement = checkbox.nextElementSibling;
+
+      checkbox.checked ? this.checkedItems.add(itemId) : this.checkedItems.delete(itemId);
+      textElement.classList.toggle('checked', checkbox.checked);
+
+      this.saveState();
+      this.updateProgress();
+    }
+
+    updateProgress() {
+      const checkedCount = this.checkedItems.size;
+      const total = this.totalItems || 0;
+      const percentage = total > 0 ? (checkedCount / total) * 100 : 0;
+
+      document.getElementById('progress-bar').style.width = `${percentage}%`;
+      document.getElementById('progress-text').textContent = `${checkedCount}/${total}`;
+    }
+
+    saveState() {
+      localStorage.setItem('schoolSuppliesChecked', JSON.stringify([...this.checkedItems]));
+    }
+
+    loadState() {
+      const saved = localStorage.getItem('schoolSuppliesChecked');
+      if (saved) this.checkedItems = new Set(JSON.parse(saved));
+
+      document.querySelectorAll('.item-checkbox').forEach(checkbox => {
         const itemId = checkbox.dataset.item;
         const textElement = checkbox.nextElementSibling;
+        const isChecked = this.checkedItems.has(itemId);
 
-        checkbox.checked ? this.checkedItems.add(itemId) : this.checkedItems.delete(itemId);
-        textElement.classList.toggle('checked', checkbox.checked);
+        checkbox.checked = isChecked;
+        textElement.classList.toggle('checked', isChecked);
+      });
+    }
 
-        this.saveState();
-        this.updateProgress();
-      }
-
-      updateProgress() {
-        const checkedCount = this.checkedItems.size;
-        const total = this.totalItems || 0;
-        const percentage = total > 0 ? (checkedCount / total) * 100 : 0;
-
-        document.getElementById('progress-bar').style.width = `${percentage}%`;
-        document.getElementById('progress-text').textContent = `${checkedCount}/${total}`;
-      }
-
-      saveState() {
-        localStorage.setItem('schoolSuppliesChecked', JSON.stringify([...this.checkedItems]));
-      }
-
-      loadState() {
-        const saved = localStorage.getItem('schoolSuppliesChecked');
-        if (saved) this.checkedItems = new Set(JSON.parse(saved));
-
-        document.querySelectorAll('.item-checkbox').forEach(checkbox => {
-          const itemId = checkbox.dataset.item;
-          const textElement = checkbox.nextElementSibling;
-          const isChecked = this.checkedItems.has(itemId);
-
-          checkbox.checked = isChecked;
-          textElement.classList.toggle('checked', isChecked);
+    resetAll() {
+      if (confirm('Êtes-vous sûr de vouloir tout réinitialiser ?')) {
+        this.checkedItems.clear();
+        localStorage.removeItem('schoolSuppliesChecked');
+        document.querySelectorAll('.item-checkbox').forEach(cb => {
+          cb.checked = false;
+          cb.nextElementSibling.classList.remove('checked');
         });
-      }
-
-      resetAll() {
-        if (confirm('Êtes-vous sûr de vouloir tout réinitialiser ?')) {
-          this.checkedItems.clear();
-          localStorage.removeItem('schoolSuppliesChecked');
-          document.querySelectorAll('.item-checkbox').forEach(cb => {
-            cb.checked = false;
-            cb.nextElementSibling.classList.remove('checked');
-            document.getElementById('seed-field').value = '';
-          });
-          this.updateProgress();
-        }
-      }
-
-      generateSeed() {
-        const seed = btoa(JSON.stringify([...this.checkedItems]));
-        document.getElementById('seed-field').value = seed;
-      }
-
-      loadFromSeed() {
-        const input = document.getElementById('seed-field').value.trim();
-        try {
-          const decoded = JSON.parse(atob(input));
-          this.checkedItems = new Set(decoded);
-
-          document.querySelectorAll('.item-checkbox').forEach(cb => {
-            const id = cb.dataset.item;
-            const isChecked = this.checkedItems.has(id);
-            cb.checked = isChecked;
-            cb.nextElementSibling.classList.toggle('checked', isChecked);
-          });
-
-          this.saveState();
-          this.updateProgress();
-          // Nettoyer le champ après chargement
-          document.getElementById('seed-field').value = '';
-        } catch (e) {
-          alert("Seed invalide.");
-        }
+        document.getElementById('seed-field').value = '';
+        this.updateProgress();
+        this.showToast("🧼 Réinitialisé !");
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      new SchoolSuppliesTracker();
-    });
-  </script>
+    generateSeed() {
+      const seed = btoa(JSON.stringify([...this.checkedItems]));
+      document.getElementById('seed-field').value = seed;
+    }
+
+    loadFromSeed() {
+      const input = document.getElementById('seed-field').value.trim();
+      try {
+        const decoded = JSON.parse(atob(input));
+        this.checkedItems = new Set(decoded);
+
+        document.querySelectorAll('.item-checkbox').forEach(cb => {
+          const id = cb.dataset.item;
+          const isChecked = this.checkedItems.has(id);
+          cb.checked = isChecked;
+          cb.nextElementSibling.classList.toggle('checked', isChecked);
+        });
+
+        this.saveState();
+        this.updateProgress();
+        document.getElementById('seed-field').value = '';
+        this.showToast("✅ Seed chargée !");
+      } catch (e) {
+        this.showToast("❌ Seed invalide.");
+      }
+    }
+
+    showToast(message) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+
+      toast.textContent = message;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2500);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new SchoolSuppliesTracker();
+  });
+</script>
+
 </body>
 
 </html>
